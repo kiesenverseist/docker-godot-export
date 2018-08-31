@@ -20,7 +20,7 @@ RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/s
 	&& wget -q https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk \
 	&& apk add glibc-2.28-r0.apk
 
-RUN wget -q --waitretry=1 --retry-connrefused -T 10 https://downloads.tuxfamily.org/godotengine/3.0.6/Godot_v3.0.6-stable_x11.64.zip -O /tmp/godot.zip \
+RUN wget -q --waitretry=1 --retry-connrefused -T 10 https://downloads.tuxfamily.org/godotengine/3.0.6/Godot_v3.0.6-stable_linux_headless.64.zip -O /tmp/godot.zip \
 	&& unzip -q -d /tmp /tmp/godot.zip \
 	&& mv /tmp/Godot* /build/godot
 
@@ -37,4 +37,4 @@ RUN mkdir -p /tmp/cache && mkdir -p /tmp/data && mkdir -p /tmp/config
 ENV EXPORT_NAME HTML5
 ENV OUTPUT_FILENAME index.html
 
-CMD ["sh", "-c", "/build/godot --export \"${EXPORT_NAME}\" --path /build/src \"/build/output/${OUTPUT_FILENAME}\""]
+CMD ["sh", "-c", "/build/godot --export \"${EXPORT_NAME}\" --path /build/src \"/build/output/${OUTPUT_FILENAME}\" --quit"]
