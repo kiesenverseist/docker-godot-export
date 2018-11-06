@@ -10,9 +10,16 @@
 #	-e OUTPUT_FILENAME="index.html" \
 #	-v $(pwd):/build/src -v /tmp/output:/build/output gamedrivendesign/godot-export
 
+FROM alpine:edge
+
 WORKDIR /build
 
 RUN apk --no-cache add ca-certificates wget
+
+RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub \
+	&& wget -q https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk \
+	&& apk add glibc-2.28-r0.apk
+
 
 RUN wget -q --waitretry=1 --retry-connrefused -T 10 https://downloads.tuxfamily.org/godotengine/3.0.6/Godot_v3.0.6-stable_linux_server.64.zip -O /tmp/godot.zip \
 	&& unzip -q -d /tmp /tmp/godot.zip \
