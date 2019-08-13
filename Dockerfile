@@ -21,14 +21,19 @@ RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/s
 	&& apk add glibc-2.27-r0.apk
 
 
-RUN wget -q --waitretry=1 --retry-connrefused -T 10 https://downloads.tuxfamily.org/godotengine/3.1/alpha2/Godot_v3.1-alpha2_linux_headless.64.zip -O /tmp/godot.zip \
+RUN wget -q --waitretry=1 --retry-connrefused -T 10 https://archive.hugo.pro/builds/godot/server/godot-linux-headless-nightly-x86_64.tar.xz -O /tmp/godot.zip \
 	&& unzip -q -d /tmp /tmp/godot.zip \
 	&& mv /tmp/Godot* /build/godot
 
-RUN wget -q --waitretry=1 --retry-connrefused -T 10 https://downloads.tuxfamily.org/godotengine/3.1/alpha2/Godot_v3.1-alpha2_export_templates.tpz -O /tmp/export-templates.tpz \
+RUN wget -q --waitretry=1 --retry-connrefused -T 10 https://archive.hugo.pro/builds/godot/templates/godot-templates-android-html5-linux-windows-nightly.tpz -O /tmp/export-templates.tpz \
 	&& mkdir -p /tmp/data/godot/templates \
 	&& unzip -q -d /tmp/data/godot/templates /tmp/export-templates.tpz \
-	&& mv /tmp/data/godot/templates/templates /tmp/data/godot/templates/3.1.alpha
+	&& mv /tmp/data/godot/templates/templates /tmp/data/godot/templates/3.2.dev
+
+RUN wget -q --waitretry=1 --retry-connrefused -T 10 https://archive.hugo.pro/builds/godot/templates/godot-templates-ios-macos-nightly.tpz -O /tmp/export-templates.tpz \
+	&& mkdir -p /tmp/data/godot/templates \
+	&& unzip -q -d /tmp/data/godot/templates /tmp/export-templates.tpz \
+	&& mv /tmp/data/godot/templates/templates /tmp/data/godot/templates/3.2.dev
 
 ENV XDG_CACHE_HOME /tmp/cache
 ENV XDG_DATA_HOME /tmp/data
